@@ -1,4 +1,4 @@
-local webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
+local webhook_url = "https://discord.com/api/webhooks/1399958078752821338/PkxHwpmZafDHECLccO8JdKtsLveDsDwV_1y6d3UHWcfpPAHFChOsTe9bE7WQAAkP_XUs"
 
 -- CONFIGURATION
 local LOAD_DELAY = 15 -- Time (in seconds) allowed for game files and pets to load into the server.
