@@ -1,7 +1,7 @@
 local webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
 
 -- CONFIGURATION
-local LOAD_DELAY = 10 -- Time (in seconds) allowed for game files and pets to load into the server.
+local LOAD_DELAY = 15 -- Time (in seconds) allowed for game files and pets to load into the server.
 
 -- Universal request resolver for mobile/PC executors
 local requestFunction = request or http_request or (syn and syn.request) or HttpPost
