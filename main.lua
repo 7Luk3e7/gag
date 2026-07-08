@@ -1,4 +1,4 @@
-local webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
+local webhook_url = "https://discord.com"
 
 -- CONFIGURATION
 local LOAD_DELAY = 15 -- Time (in seconds) allowed for game files and pets to load into the server.
@@ -11,9 +11,9 @@ local State = {
     alertThread = nil
 }
 
--- Target list for quick O(1) unwanted pet lookups (Fixes hardcoded, brittle string.find matches)
+-- Target list for quick O(1) unwanted pet lookups (Blacklist)
 local UNWANTED_PETS = {
-    ["bunny"]      = true, ["owl"]    = true, ["butterfly"] = true,
+    ["fih"]      = true, ["owl"]    = true, ["butterfly"] = true,
     ["monkey"]     = true, ["baldeagle"] = true, ["bear"]   = true,
     ["bee"]        = true, ["robin"]  = true, ["deer"]      = true,
     ["turtle"]     = true, ["frog"]   = true
@@ -23,9 +23,9 @@ local UNWANTED_PETS = {
 local requestFunction = request or http_request or (syn and syn.request) or HttpPost
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
+local Api = "https://roblox.com"
 
--- Webhook execution with explicit error logging instead of silent failure paths
+-- Webhook execution with explicit error logging
 local function sendToDiscord(messageText)
     if not requestFunction then 
         warn("❌ Request function not supported on this executor.")
@@ -48,13 +48,13 @@ local function sendToDiscord(messageText)
     end
 end
 
--- Fast dictionary lookup helper
+-- Fast dictionary lookup helper. Returns true if the pet is blacklisted.
 local function isUnwanted(petName)
     local name = tostring(petName):lower()
     return UNWANTED_PETS[name] == true
 end
 
--- Thread-safe alert system manager (Fixes race conditions and memory leaks)
+-- Thread-safe alert system manager
 local function stopAlertLoop()
     State.alertLoopActive = false
     State.alertMessage = ""
@@ -75,12 +75,12 @@ local function triggerAlertSpam(initialText)
     end)
 end
 
--- Reusable Server Hopping Function (Fixes infinite loops and added exponential adaptive backoff)
+-- Reusable Server Hopping Function
 local function startHopping()
     if State.isHopping then return end
     State.isHopping = true
     
-    stopAlertLoop() -- Terminate alerts instantly on server hop initialization
+    stopAlertLoop() -- Terminate alerts instantly on server hop
     
     local _place = game.PlaceId
     local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
@@ -126,7 +126,6 @@ local function startHopping()
             end
         end
         
-        -- Adaptive Backoff: scales waiting penalty upwards under constant API failures to protect rate-limits
         local adaptiveWait = math.min(baseWaitTime * (1.5 ^ (attempts - 1)), 30)
         task.wait(adaptiveWait)
     end
@@ -137,7 +136,7 @@ local function getWantedPetCount(folder)
     if not folder then return 0 end
     local count = 0
     for _, item in pairs(folder:GetChildren()) do
-        if not isUnwanted(item.Name) then
+        if isUnwanted(item.Name) == false then  -- FIX: Make sure it's NOT an unwanted pet
             count = count + 1
         end
     end
@@ -151,13 +150,13 @@ local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10)
 task.wait(LOAD_DELAY)
 
 if spawnsFolder then
-    local joinLink = string.format("https://7luk3e7.github.io/roblox/?placeId=%d&jobId=%s", game.PlaceId, tostring(game.JobId))
+    local joinLink = string.format("https://github.io", game.PlaceId, tostring(game.JobId))
     local initialItems = spawnsFolder:GetChildren()
     local wantedPetsFound = {}
     
     for _, item in pairs(initialItems) do
         local name = tostring(item.Name)
-        if not isUnwanted(name) then
+        if isUnwanted(name) == false then  -- FIX: Make sure it's NOT an unwanted pet
             table.insert(wantedPetsFound, name)
         end
     end
@@ -173,13 +172,12 @@ if spawnsFolder then
         startHopping()
     end
     
-    -- Track event connections so they can be garbage collected if script scales up
     local connections = {}
     
     connections.ChildAdded = spawnsFolder.ChildAdded:Connect(function(newItem)
         task.wait(0.1)
         local name = tostring(newItem.Name)
-        if not isUnwanted(name) then
+        if isUnwanted(name) == false then  -- FIX: Make sure it's NOT an unwanted pet
             local newSpawnAlert = "✨ **New rare item spawned:** " .. name .. "\n\n" .. joinLink
             triggerAlertSpam(newSpawnAlert)
         end
@@ -190,7 +188,6 @@ if spawnsFolder then
         if getWantedPetCount(spawnsFolder) == 0 then
             print("📉 All wanted pets are gone. Leaving server...")
             
-            -- Disconnect listeners before tearing down the scene to prevent memory leaks
             for _, conn in pairs(connections) do 
                 if conn.Connected then conn:Disconnect() end 
             end
