@@ -110,7 +110,7 @@ task.wait(LOAD_DELAY)
 
 if spawnsFolder then
     -- Clickable HTTPS redirect link (Discord linkifies this; it forwards to roblox:// automatically)
-    local joinLink = string.format("https://github.io", game.PlaceId, tostring(game.JobId))
+    local joinLink = string.format("https://7luk3e7.github.io/roblox/?placeId=%d&jobId=%s", game.PlaceId, tostring(game.JobId))
     local initialItems = spawnsFolder:GetChildren()
     local wantedPetsFound = {}
     
