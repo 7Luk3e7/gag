@@ -1,6 +1,6 @@
 local default_webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
 -- New webhook for bunnies
-local bunny_webhook_url = "https://discord.com/api/webhooks/1399958078752821338/PkxHwpmZafDHECLccO8JdKtsLveDsDwV_1y6d3UHWcfpPAHFChOsTe9bE7WQAAkP_XUs"
+local racoon_webhook_url = "https://discord.com/api/webhooks/1399958078752821338/PkxHwpmZafDHECLccO8JdKtsLveDsDwV_1y6d3UHWcfpPAHFChOsTe9bE7WQAAkP_XUs"
 
 local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
 
@@ -19,8 +19,8 @@ local function sendToDiscord(messageText)
     
     -- Dynamically select the target webhook URL
     local target_webhook = default_webhook_url
-    if string.find(messageText:lower(), "bunny") then
-        target_webhook = bunny_webhook_url
+    if string.find(messageText:lower(), "racoon") then
+        target_webhook = racoon_webhook_url
     end
 
     -- Automatically routing through a proxy to bypass Discord's direct API blocks on executors
