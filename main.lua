@@ -128,7 +128,7 @@ if spawnsFolder then
     end
 
     if #wantedPetsFound > 0 then
-        local initialList = "📋 **Current target items in folder:**\n"
+        local initialList = " **Pet Found**\n"
         for _, name in pairs(wantedPetsFound) do
             initialList = initialList .. "• " .. name .. "\n"
         end
