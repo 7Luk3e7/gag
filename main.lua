@@ -1,37 +1,70 @@
-local webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW" -- CONFIGURATION
+local webhook_url = "https://discord.com" -- CONFIGURATION
 local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
 
 -- Universal request resolver for mobile/PC executors
 local requestFunction = request or http_request or (syn and syn.request) or HttpPost
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
-local Api = "https://games.roblox.com/v1/games/"
+local Api = "https://roblox.com"
 
--- Global tracking variable to manage the repeating notification stream
+-- Global tracking variables
 local alertLoopActive = false
 local alertEmbedData = {}
+local rainbowIndex = 1
+
+-- Color mapping palette
+local COLORS = {
+    GOLD    = 15844367, -- #F1C40F
+    PURPLE  = 10181046, -- #9B59B6
+    GREEN   = 5763719,  -- #57F287 (Fallback Default)
+}
+
+-- Rainbow sequence for the Raccoon loop rotation
+local RAINBOW_SEQUENCE = {
+    15548997, -- Red (#ED4245)
+    15105570, -- Orange (#E67E22)
+    16776960, -- Yellow (#FFFF00)
+    5763719,  -- Green (#57F287)
+    3447003,  -- Blue (#3498DB)
+    10181046  -- Purple (#9B59B6)
+}
 
 -- Helper function to format the pet's name to drop "WildPet_" and only include the name and the start of the ID
 local function cleanName(fullName)
     local str = tostring(fullName)
-    -- Extracts the prefix (which contains WildPet_ and the pet type), and the first part of the UUID hyphen split
     local base, firstIdSegment = string.match(str, "^([%w_]+_)[%w_]+_([%w]+)%-")
     if base and firstIdSegment then
-        -- Removes "WildPet_" from the base string
         local cleanedBase = string.gsub(base, "^WildPet_", "")
-        -- Returns the name along with the first 2 characters of that ID segment (e.g. GoldenDragonfly_6d)
         return cleanedBase .. string.sub(firstIdSegment, 1, 2)
     end
-    -- Fallback safety to strip out WildPet_ if pattern matching structure differs slightly
     return string.gsub(str, "^WildPet_", "")
 end
 
--- Modified to bundle the click to join option directly inside the embed description
+-- Inspects string keywords to dynamically resolve embed tint requirements
+local function determineColor(rawListName)
+    local searchString = tostring(rawListName):lower()
+    if string.find(searchString, "goldendragonfly") then
+        return COLORS.GOLD
+    elseif string.find(searchString, "unicorn") then
+        return COLORS.PURPLE
+    elseif string.find(searchString, "raccoon") then
+        -- Returns a rolling index pointer to simulate a rainbow
+        local activeColor = RAINBOW_SEQUENCE[rainbowIndex]
+        rainbowIndex = (rainbowIndex % #RAINBOW_SEQUENCE) + 1
+        return activeColor
+    end
+    return COLORS.GREEN
+end
+
+-- Modified to accept dynamic color properties and completely exclude Place ID/Job ID rows
 local function sendToDiscord(embedData)
     if not requestFunction then return end
     
     local cleanedUrl = webhook_url:gsub("discord.com", "webhook.lewisakura.moe"):gsub("discordapp.com", "webhook.lewisakura.moe")
-    local rawJoinLink = "https://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId)
+    local rawJoinLink = "https://github.io" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId)
+    
+    -- Pick color based on content text entries
+    local sideColor = determineColor(embedData.fieldValue)
     
     local payload = {
         ["embeds"] = {
@@ -39,7 +72,7 @@ local function sendToDiscord(embedData)
                 ["title"] = embedData.title or "Server Notification",
                 ["type"] = "rich",
                 ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
-                ["color"] = 5763719, -- Vibrant Green (#57F287)
+                ["color"] = sideColor,
                 ["fields"] = {
                     {
                         ["name"] = embedData.fieldName or "Pets Found",
@@ -70,7 +103,7 @@ local function isUnwanted(petName)
     return false
 end
 
--- Reusable Server Hopping Function (Tries every 2 seconds until successful)
+-- Reusable Server Hopping Function
 local hoppingStarted = false
 local function startHopping()
     if hoppingStarted then return end
@@ -113,7 +146,7 @@ local function getWantedPetCount(folder)
     return count
 end
 
--- Activates a parallel thread to spam the webhook link every 2 seconds
+-- Activates parallel thread looping interval
 local function triggerAlertSpam(embedStructure)
     alertEmbedData = embedStructure
     if alertLoopActive then return end
