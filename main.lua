@@ -61,7 +61,9 @@ local function startHopping()
     
     local function ListServers(cursor)
         local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end)
-        if success and Raw then return Http:JSONDecode(Raw) end
+        if success and Raw then
+            return Http:JSONDecode(Raw)
+        end
         return nil
     end
     
@@ -74,8 +76,11 @@ local function startHopping()
                 chosenServer = Servers.data[math.random(1, #Servers.data)]
             end
         end)
+        
         if chosenServer then
-            pcall(function() TPS:TeleportToPlaceInstance(_place, chosenServer.id, game.Players.LocalPlayer) end)
+            pcall(function()
+                TPS:TeleportToPlaceInstance(_place, chosenServer.id, game.Players.LocalPlayer)
+            end)
         end
         task.wait(2)
     end
@@ -101,7 +106,7 @@ local function triggerAlertSpam(initialText)
     task.spawn(function()
         while alertLoopActive do
             sendToDiscord(alertMessage)
-            task.wait(5)
+            task.wait(2)
         end
     end)
 end
@@ -109,21 +114,25 @@ end
 -- Main Check & Notification Sequence
 local map = workspace:WaitForChild("Map", 10)
 local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10)
+
 task.wait(LOAD_DELAY)
 
 if spawnsFolder then
-    -- Clickable HTTPS redirect link (Discord linkifies this; it forwards to roblox:// automatically)
-    local joinLink = string.format("https://7luk3e7.github.io/roblox/?placeId=%d&jobId=%s", game.PlaceId, tostring(game.JobId))
+    -- Raw destination link string
+    local rawLink = string.format("https://7luk3e7.github.io/roblox/?placeId=%d&jobId=%s", game.PlaceId, tostring(game.JobId))
+    -- Wrapped inside Discord markdown format [join](link)
+    local joinLink = string.format("[%s](%s)", "Click To Join", rawLink)
+
     local initialItems = spawnsFolder:GetChildren()
     local wantedPetsFound = {}
-    
+
     for _, item in pairs(initialItems) do
         local name = tostring(item.Name)
         if not isUnwanted(name) then
             table.insert(wantedPetsFound, cleanName(name))
         end
     end
-    
+
     if #wantedPetsFound > 0 then
         local initialList = " **Pet Found**\n"
         for _, name in pairs(wantedPetsFound) do
@@ -134,7 +143,7 @@ if spawnsFolder then
     else
         startHopping()
     end
-    
+
     spawnsFolder.ChildAdded:Connect(function(newItem)
         task.wait(0.1)
         local name = tostring(newItem.Name)
@@ -143,7 +152,7 @@ if spawnsFolder then
             triggerAlertSpam(newSpawnAlert)
         end
     end)
-    
+
     spawnsFolder.ChildRemoved:Connect(function()
         task.wait(0.5)
         if getWantedPetCount(spawnsFolder) == 0 then
