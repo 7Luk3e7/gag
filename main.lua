@@ -13,12 +13,22 @@ local Api = "https://games.roblox.com/v1/games/"
 local alertLoopActive = false
 local alertMessage = ""
 
+-- Helper function to format the pet's name to only include the first 2 parts and the start of the ID
+local function cleanName(fullName)
+    local str = tostring(fullName)
+    -- Matches the prefix, pet name, and the first part of the UUID hyphen split (e.g. WildPet_Unicorn_cb32b617)
+    local base, firstIdSegment = string.match(str, "^([%w_]+_)[%w_]+_([%w]+)%-")
+    if base and firstIdSegment then
+        -- Takes the first 2 characters of that ID segment as requested (e.g. cb)
+        return base .. string.sub(firstIdSegment, 1, 2)
+    end
+    return str
+end
+
 local function sendToDiscord(messageText)
     if not requestFunction then return end
-
     -- Automatically routing through a proxy to bypass Discord's direct API blocks on executors
     local cleanedUrl = webhook_url:gsub("discord.com", "webhook.lewisakura.moe"):gsub("discordapp.com", "webhook.lewisakura.moe")
-
     pcall(function()
         requestFunction({
             Url = cleanedUrl,
@@ -46,22 +56,16 @@ local function startHopping()
     if hoppingStarted then return end
     hoppingStarted = true
     alertLoopActive = false
-
     local _place = game.PlaceId
     local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
-
+    
     local function ListServers(cursor)
-        local success, Raw = pcall(function()
-            return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or ""))
-        end)
-        if success and Raw then
-            return Http:JSONDecode(Raw)
-        end
+        local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end)
+        if success and Raw then return Http:JSONDecode(Raw) end
         return nil
     end
-
+    
     print("🚀 Starting auto-hop sequence...")
-
     while true do
         local chosenServer = nil
         pcall(function()
@@ -70,13 +74,9 @@ local function startHopping()
                 chosenServer = Servers.data[math.random(1, #Servers.data)]
             end
         end)
-
         if chosenServer then
-            pcall(function()
-                TPS:TeleportToPlaceInstance(_place, chosenServer.id, game.Players.LocalPlayer)
-            end)
+            pcall(function() TPS:TeleportToPlaceInstance(_place, chosenServer.id, game.Players.LocalPlayer) end)
         end
-
         task.wait(2)
     end
 end
@@ -98,7 +98,6 @@ local function triggerAlertSpam(initialText)
     alertMessage = initialText
     if alertLoopActive then return end
     alertLoopActive = true
-
     task.spawn(function()
         while alertLoopActive do
             sendToDiscord(alertMessage)
@@ -110,47 +109,43 @@ end
 -- Main Check & Notification Sequence
 local map = workspace:WaitForChild("Map", 10)
 local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10)
-
 task.wait(LOAD_DELAY)
 
 if spawnsFolder then
     -- Clickable HTTPS redirect link (Discord linkifies this; it forwards to roblox:// automatically)
     local joinLink = string.format("https://7luk3e7.github.io/roblox/?placeId=%d&jobId=%s", game.PlaceId, tostring(game.JobId))
-
     local initialItems = spawnsFolder:GetChildren()
     local wantedPetsFound = {}
-
+    
     for _, item in pairs(initialItems) do
         local name = tostring(item.Name)
         if not isUnwanted(name) then
-            table.insert(wantedPetsFound, name)
+            table.insert(wantedPetsFound, cleanName(name))
         end
     end
-
+    
     if #wantedPetsFound > 0 then
-        local initialList = " **Pet Fih Found**\n"
+        local initialList = " **Pet Found**\n"
         for _, name in pairs(wantedPetsFound) do
             initialList = initialList .. "• " .. name .. "\n"
         end
         initialList = initialList .. "\n" .. joinLink
-
         triggerAlertSpam(initialList)
     else
         startHopping()
     end
-
+    
     spawnsFolder.ChildAdded:Connect(function(newItem)
         task.wait(0.1)
         local name = tostring(newItem.Name)
         if not isUnwanted(name) then
-            local newSpawnAlert = "✨ **New rare item spawned:** " .. name .. "\n\n" .. joinLink
+            local newSpawnAlert = "✨ **New rare item spawned:** " .. cleanName(name) .. "\n\n" .. joinLink
             triggerAlertSpam(newSpawnAlert)
         end
     end)
-
+    
     spawnsFolder.ChildRemoved:Connect(function()
         task.wait(0.5)
-
         if getWantedPetCount(spawnsFolder) == 0 then
             print("📉 All wanted pets are gone (bought or despawned). Leaving server...")
             startHopping()
