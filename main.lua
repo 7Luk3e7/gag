@@ -101,7 +101,7 @@ local function triggerAlertSpam(initialText)
     task.spawn(function()
         while alertLoopActive do
             sendToDiscord(alertMessage)
-            task.wait(2)
+            task.wait(5)
         end
     end)
 end
