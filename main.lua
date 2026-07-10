@@ -48,6 +48,7 @@ local function determineColor(rawListName)
     elseif string.find(searchString, "unicorn") then
         return COLORS.PURPLE
     elseif string.find(searchString, "raccoon") then
+        -- Returns a rolling index pointer to simulate a rainbow
         local activeColor = RAINBOW_SEQUENCE[rainbowIndex]
         rainbowIndex = (rainbowIndex % #RAINBOW_SEQUENCE) + 1
         return activeColor
@@ -55,7 +56,7 @@ local function determineColor(rawListName)
     return COLORS.GREEN
 end
 
--- Modified to pass the link globally into the title payload property structure
+-- Modified to accept dynamic color properties and completely exclude Place ID/Job ID rows
 local function sendToDiscord(embedData)
     if not requestFunction then return end
     
@@ -69,10 +70,8 @@ local function sendToDiscord(embedData)
         ["embeds"] = {
             {
                 ["title"] = embedData.title or "Server Notification",
-                ["url"] = rawJoinLink, -- Making the entire main title text a clickable hyperlink block
                 ["type"] = "rich",
-                -- Expanded the description space into a larger markdown link surface area
-                ["description"] = "▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n👉 [**CLICK HERE TO JOIN THIS SERVER**](" .. rawJoinLink .. ")\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬",
+                ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
                 ["color"] = sideColor,
                 ["fields"] = {
                     {
