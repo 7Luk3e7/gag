@@ -1,4 +1,4 @@
-local webhook_url = "https://discord.com"
+local webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
 
 -- CONFIGURATION
 local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
@@ -7,7 +7,7 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 local requestFunction = request or http_request or (syn and syn.request) or HttpPost
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
-local Api = "https://roblox.com"
+local Api = "https://games.roblox.com/v1/games/"
 
 -- Global tracking variable to manage the repeating notification stream
 local alertLoopActive = false
@@ -23,19 +23,6 @@ local function cleanName(fullName)
         return base .. string.sub(firstIdSegment, 1, 2)
     end
     return str
-end
-
--- Helper function to add specific emojis based on the pet name found
-local function getPetEmoji(fullName)
-    local lowerName = tostring(fullName):lower()
-    if string.find(lowerName, "unicorn") then
-        return "🦄 "
-    elseif string.find(lowerName, "racoon") or string.find(lowerName, "raccoon") then
-        return "🦝 "
-    elseif string.find(lowerName, "dragonfly") then
-        return "🐉 "
-    end
-    return "" -- Default empty if it's a different wanted pet (like butterfly)
 end
 
 local function sendToDiscord(messageText)
@@ -114,7 +101,7 @@ local function triggerAlertSpam(initialText)
     task.spawn(function()
         while alertLoopActive do
             sendToDiscord(alertMessage)
-            task.wait(5)
+            task.wait(2)
         end
     end)
 end
@@ -126,23 +113,21 @@ task.wait(LOAD_DELAY)
 
 if spawnsFolder then
     -- Clickable HTTPS redirect link (Discord linkifies this; it forwards to roblox:// automatically)
-    local joinLink = string.format("https://github.io", game.PlaceId, tostring(game.JobId))
+    local joinLink = string.format("https://7luk3e7.github.io/roblox/?placeId=%d&jobId=%s", game.PlaceId, tostring(game.JobId))
     local initialItems = spawnsFolder:GetChildren()
     local wantedPetsFound = {}
     
     for _, item in pairs(initialItems) do
         local name = tostring(item.Name)
         if not isUnwanted(name) then
-            -- Store a pre-formatted string containing the emoji and the cleaned ID
-            local emoji = getPetEmoji(name)
-            table.insert(wantedPetsFound, emoji .. cleanName(name))
+            table.insert(wantedPetsFound, cleanName(name))
         end
     end
     
     if #wantedPetsFound > 0 then
         local initialList = " **Pet Found**\n"
-        for _, formattedName in pairs(wantedPetsFound) do
-            initialList = initialList .. "• " .. formattedName .. "\n"
+        for _, name in pairs(wantedPetsFound) do
+            initialList = initialList .. "• " .. name .. "\n"
         end
         initialList = initialList .. "\n" .. joinLink
         triggerAlertSpam(initialList)
@@ -154,8 +139,7 @@ if spawnsFolder then
         task.wait(0.1)
         local name = tostring(newItem.Name)
         if not isUnwanted(name) then
-            local emoji = getPetEmoji(name)
-            local newSpawnAlert = "✨ **New rare item spawned:** " .. emoji .. cleanName(name) .. "\n\n" .. joinLink
+            local newSpawnAlert = "✨ **New rare item spawned:** " .. cleanName(name) .. "\n\n" .. joinLink
             triggerAlertSpam(newSpawnAlert)
         end
     end)
