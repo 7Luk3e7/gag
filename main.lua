@@ -11,45 +11,38 @@ local Api = "https://games.roblox.com/v1/games/"
 local alertLoopActive = false
 local alertEmbedData = {}
 
--- Helper function to format the pet's name to only include the first 2 parts and the start of the ID
+-- Helper function to format the pet's name to drop "WildPet_" and only include the name and the start of the ID
 local function cleanName(fullName)
     local str = tostring(fullName)
-    -- Matches the prefix, pet name, and the first part of the UUID hyphen split (e.g. WildPet_Unicorn_cb32b617)
+    -- Extracts the prefix (which contains WildPet_ and the pet type), and the first part of the UUID hyphen split
     local base, firstIdSegment = string.match(str, "^([%w_]+_)[%w_]+_([%w]+)%-")
     if base and firstIdSegment then
-        -- Takes the first 2 characters of that ID segment as requested (e.g. cb)
-        return base .. string.sub(firstIdSegment, 1, 2)
+        -- Removes "WildPet_" from the base string
+        local cleanedBase = string.gsub(base, "^WildPet_", "")
+        -- Returns the name along with the first 2 characters of that ID segment (e.g. GoldenDragonfly_6d)
+        return cleanedBase .. string.sub(firstIdSegment, 1, 2)
     end
-    return str
+    -- Fallback safety to strip out WildPet_ if pattern matching structure differs slightly
+    return string.gsub(str, "^WildPet_", "")
 end
 
--- Modified to accept an embed structure rather than plain text
+-- Modified to bundle the click to join option directly inside the embed description
 local function sendToDiscord(embedData)
     if not requestFunction then return end
     
-    -- Automatically routing through a proxy to bypass Discord's direct API blocks on executors
     local cleanedUrl = webhook_url:gsub("discord.com", "webhook.lewisakura.moe"):gsub("discordapp.com", "webhook.lewisakura.moe")
+    local rawJoinLink = "https://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId)
     
-    -- Constructing the payload using the Discord rich embed structure
     local payload = {
-        ["content"] = "**Click to join:**\nhttps://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId),
         ["embeds"] = {
             {
-                ["title"] = embedData.title or "Join Server",
-                ["color"] = 5763719, -- Vibrant Green color decimal (corresponding to hex #57F287)
+                ["title"] = embedData.title or "Server Notification",
+                ["type"] = "rich",
+                ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
+                ["color"] = 5763719, -- Vibrant Green (#57F287)
                 ["fields"] = {
                     {
-                        ["name"] = "Place ID",
-                        ["value"] = tostring(game.PlaceId),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = "Job ID",
-                        ["value"] = tostring(game.JobId),
-                        ["inline"] = true
-                    },
-                    {
-                        ["name"] = embedData.fieldName or "Status",
+                        ["name"] = embedData.fieldName or "Pets Found",
                         ["value"] = embedData.fieldValue or "No details available",
                         ["inline"] = false
                     }
