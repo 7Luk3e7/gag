@@ -150,8 +150,8 @@ if spawnsFolder then
         end
         
         triggerAlertSpam({
-            title = "Server Inventory Found",
-            fieldName = "Pets Found",
+            title = "IchiGoat",
+            fieldName = "IchiGoat Found A",
             fieldValue = initialList
         })
     else
