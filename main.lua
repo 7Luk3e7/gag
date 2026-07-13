@@ -6,8 +6,7 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 -- Pets added here will only be sent to the SECONDARY webhook and will NOT trigger the main webhook
 local SECONDARY_LIST = {
     "racoon",
-    "unicorn",
-    "owl"
+    "unicorn"
     -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
 }
 
