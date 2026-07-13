@@ -5,8 +5,7 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 
 -- Pets added here will only be sent to the SECONDARY webhook and will NOT trigger the main webhook
 local SECONDARY_LIST = {
-    "racoon"
-    -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
+    "racoon" -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
 }
 
 -- Services
@@ -42,17 +41,21 @@ local function sendToDiscord(embedData, urlToUse)
     local rawJoinLink = "https://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId)
     
     local payload = {
-        ["embeds"] = { {
-            ["title"] = embedData.title or "Server Notification",
-            ["type"] = "rich",
-            ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
-            ["color"] = 5763719, -- Vibrant Green (#57F287)
-            ["fields"] = { {
-                ["name"] = embedData.fieldName or "Pets Found",
-                ["value"] = embedData.fieldValue or "No details available",
-                ["inline"] = false
-            } }
-        } }
+        ["embeds"] = {
+            {
+                ["title"] = embedData.title or "Server Notification",
+                ["type"] = "rich",
+                ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
+                ["color"] = 5763719, -- Vibrant Green (#57F287)
+                ["fields"] = {
+                    {
+                        ["name"] = embedData.fieldName or "Pets Found",
+                        ["value"] = embedData.fieldValue or "No details available",
+                        ["inline"] = false
+                    }
+                }
+            }
+        }
     }
     
     pcall(function()
@@ -68,10 +71,7 @@ end
 -- Helper check function to find unwanted pets
 local function isUnwanted(petName)
     local name = tostring(petName):lower()
-    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or 
-       string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or 
-       string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or 
-       string.find(name, "turtle") or string.find(name, "frog") then
+    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or string.find(name, "turtle") or string.find(name, "frog") then
         return true
     end
     return false
@@ -99,7 +99,9 @@ local function startHopping()
     
     local function ListServers(cursor)
         local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end)
-        if success and Raw then return Http:JSONDecode(Raw) end
+        if success and Raw then
+            return Http:JSONDecode(Raw)
+        end
         return nil
     end
     
@@ -112,8 +114,11 @@ local function startHopping()
                 chosenServer = Servers.data[math.random(1, #Servers.data)]
             end
         end)
+        
         if chosenServer then
-            pcall(function() TPS:TeleportToPlaceInstance(_place, chosenServer.id, Players.LocalPlayer) end)
+            pcall(function()
+                TPS:TeleportToPlaceInstance(_place, chosenServer.id, Players.LocalPlayer)
+            end)
         end
         task.wait(2)
     end
@@ -144,17 +149,24 @@ local function getWantedPetCount(folder)
     return count
 end
 
--- Activates a parallel thread to spam the webhook link every 2 seconds
+-- Modified thread to send exactly 2 times and then auto-leave/hop
 local function triggerAlertSpam(embedStructure, webhookUrl)
     alertEmbedData = embedStructure
     targetWebhookUsed = webhookUrl
     if alertLoopActive then return end
     alertLoopActive = true
+    
     task.spawn(function()
-        while alertLoopActive do
+        local sendCount = 0
+        while alertLoopActive and sendCount < 2 do
             sendToDiscord(alertEmbedData, targetWebhookUsed)
-            task.wait(2)
+            sendCount = sendCount + 1
+            if sendCount < 2 then
+                task.wait(2) -- Interval between the first and second webhook
+            end
         end
+        print("🛑 Dispatched 2 webhooks. Initiating auto-hop sequence...")
+        startHopping()
     end)
 end
 
