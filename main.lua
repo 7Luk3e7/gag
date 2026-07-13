@@ -7,8 +7,7 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 local SECONDARY_LIST = {
     "racoon",
     "unicorn",
-    "owl",
-    "frog"
+    "owl"
     -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
 }
 
@@ -74,7 +73,7 @@ local function isUnwanted(petName)
     if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or 
        string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or 
        string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or 
-       string.find(name, "turtle") or string.find(name, "fih") then
+       string.find(name, "turtle") or string.find(name, "frog") then
         return true
     end
     return false
