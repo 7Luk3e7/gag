@@ -6,9 +6,9 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 
 -- Add the names of special pets here (lowercase letters only)
 local SPECIAL_PETS = {
-    "dragon",
-    "unicorn",
-    "kraken"
+    "bunny",
+    "fih",
+    "fih"
 }
 
 -- Universal request resolver for mobile/PC executors
