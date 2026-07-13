@@ -1,776 +1,249 @@
-local function _0x0000()
-if (5 == 5) and type(debug) == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x0005 = {}
-_0x0005._0x0006 = (3288 / 4)
-_0x0005._0x0007 = (472 + 472)
-do
-local _0x0008 = (1029 - 89)
-local _0x0009 = (171 - 69)
-local _0x000a = (437 + 437)
-if (2 * 3 > 5) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-if (true or false) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-end
-local function _0x000f(_0x0010, _0x0011)
-local _0x0012 = _0x0010 + _0x0011
-_0x0012 = math.floor(_0x0012 / 2)
-return _0x0012
-end
-end
-_0x0000()
-local _0x0014 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-if (true or false) and (21 - 11) < (2 + 3) then
-for _0x0015 = 1, (8 / 2) do
-_0x0015 = math.abs(_0x0015)
-end
-end
-local _0x0016 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-local _0x0017 = 3
-local _0x002f = {
-(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-local _0x003a = (405 - 86)
-local _0x003b = (525 / 3)
-local _0x003c = (80 + 80)
+-- CONFIGURATION
+local MAIN_WEBHOOK = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
+local SECONDARY_WEBHOOK = "https://discord.com/api/webhooks/1526056984112140370/n-YJtoOZ5BlBN0kMR1oLiPkRw1IEMIG-beJvs36iMbVRLD6v3B2KGNBfbPRLI4JPFsY8"
+local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
+
+-- Pets added here will only be sent to the SECONDARY webhook and will NOT trigger the main webhook
+local SECONDARY_LIST = {
+    "racoon" -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
 }
-local _0x003e = _0x001b:_0x003f((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local _0x0040 = _0x001b:_0x003f((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local _0x0041 = _0x001b:_0x003f((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local _0x0048 = _0x0043 or _0x0049 or (_0x004a and _0x004a._0x0043) or _0x004b
-local _0x004c = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-local _0x0054 = false
-local _0x0055 = {}
-for _0x0056 = 1, (63 - 53) do
-_0x0056 = math.abs(_0x0056)
+
+-- Services
+local Players = game:GetService("Players")
+local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
+
+-- Universal request resolver for mobile/PC executors
+local requestFunction = request or http_request or (syn and syn.request) or HttpPost
+local Api = "https://games.roblox.com/v1/games/"
+
+-- Global tracking variable to manage the repeating notification stream
+local alertLoopActive = false
+local alertEmbedData = {}
+local targetWebhookUsed = MAIN_WEBHOOK
+
+-- Helper function to format the pet's name to drop "WildPet_" and only include the name and the start of the ID
+local function cleanName(fullName)
+    local str = tostring(fullName)
+    local base, firstIdSegment = string.match(str, "^([%w_]+_)[%w_]+_([%w]+)%-")
+    if base and firstIdSegment then
+        local cleanedBase = string.gsub(base, "^WildPet_", "")
+        return cleanedBase .. string.sub(firstIdSegment, 1, 2)
+    end
+    return string.gsub(str, "^WildPet_", "")
 end
-local _0x0057 = _0x0014
-local _0x0058 = {}
-for _0x0004 = 1, (3876 / 4) do
-_0x0058[_0x0004] = _0x0004 * 2
+
+-- Modified to bundle the click to join option directly inside the embed description
+local function sendToDiscord(embedData, urlToUse)
+    if not requestFunction then return end
+    local currentUrl = urlToUse or MAIN_WEBHOOK
+    local cleanedUrl = currentUrl:gsub("discord.com", "webhook.lewisakura.moe"):gsub("discordapp.com", "webhook.lewisakura.moe")
+    local rawJoinLink = "https://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId)
+    
+    local payload = {
+        ["embeds"] = {
+            {
+                ["title"] = embedData.title or "Server Notification",
+                ["type"] = "rich",
+                ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
+                ["color"] = 5763719, -- Vibrant Green (#57F287)
+                ["fields"] = {
+                    {
+                        ["name"] = embedData.fieldName or "Pets Found",
+                        ["value"] = embedData.fieldValue or "No details available",
+                        ["inline"] = false
+                    }
+                }
+            }
+        }
+    }
+    
+    pcall(function()
+        requestFunction({
+            Url = cleanedUrl,
+            Method = "POST",
+            Headers = {["content-type"] = "application/json"},
+            Body = Http:JSONEncode(payload)
+        })
+    end)
 end
-local function _0x0061(_0x0062)
-local function _0x0063(_0x0064, _0x0065)
-local _0x0066 = _0x0064 + _0x0065
-_0x0066 = math.abs(_0x0066)
-return _0x0066
+
+-- Helper check function to find unwanted pets
+local function isUnwanted(petName)
+    local name = tostring(petName):lower()
+    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or string.find(name, "turtle") or string.find(name, "frog") then
+        return true
+    end
+    return false
 end
-do
-local _0x0067 = (372 - 94)
-if (1 + 1 == 2) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x0068 = (2044 / 4)
-local _0x0069 = (473 + 473)
-local _0x006a = (158 - 76)
-if (true or false) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local function _0x006b()
-local _0x006c = (382 - 20)
-for _0x0004 = 1, (5 + 5) do
-_0x006c = _0x006c + _0x0004
+
+-- Helper check function to find if a pet belongs to the secondary list
+local function isSecondaryPet(petName)
+    local name = tostring(petName):lower()
+    for _, secondaryName in ipairs(SECONDARY_LIST) do
+        if string.find(name, secondaryName:lower()) then
+            return true
+        end
+    end
+    return false
 end
-return _0x006c
+
+-- Reusable Server Hopping Function (Tries every 2 seconds until successful)
+local hoppingStarted = false
+local function startHopping()
+    if hoppingStarted then return end
+    hoppingStarted = true
+    alertLoopActive = false
+    local _place = game.PlaceId
+    local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+    
+    local function ListServers(cursor)
+        local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end)
+        if success and Raw then
+            return Http:JSONDecode(Raw)
+        end
+        return nil
+    end
+    
+    print("🚀 Starting auto-hop sequence...")
+    while true do
+        local chosenServer = nil
+        pcall(function()
+            local Servers = ListServers()
+            if Servers and Servers.data and #Servers.data > 0 then
+                chosenServer = Servers.data[math.random(1, #Servers.data)]
+            end
+        end)
+        
+        if chosenServer then
+            pcall(function()
+                TPS:TeleportToPlaceInstance(_place, chosenServer.id, Players.LocalPlayer)
+            end)
+        end
+        task.wait(2)
+    end
 end
+
+-- Check if specific players are in the game or join later
+local function checkPlayer(player)
+    if player and player.Name == "Iulkay" then
+        print("🚨 Target player Iulkay joined! Initiating auto-hop...")
+        startHopping()
+    end
 end
-local _0x006d = tostring(_0x0062)
-local _0x006e = {}
-_0x006e._0x0006 = (1467 / 3)
-_0x006e._0x0007 = (954 - 21)
-local _0x006f, _0x0070 = string.match(_0x006d, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-if (5 == 5) and _0x006f and _0x0070 then
-local _0x0071 = string.gsub(_0x006f, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), "")
-local _0x0072 = {(174 + 175), (474 + 474), (3724 / 4)}
-table.insert(_0x0072, (299 - 81))
-return _0x0071 .. string.sub(_0x0070, 1, 2)
-for _0x0073 = 1, (53 - 43) do
-_0x0073 = _0x0073 % (121 - 21)
+
+Players.PlayerAdded:Connect(checkPlayer)
+for _, player in ipairs(Players:GetPlayers()) do
+    checkPlayer(player)
 end
+
+-- Helper function to count how many wanted pets are currently spawned
+local function getWantedPetCount(folder)
+    if not folder then return 0 end
+    local count = 0
+    for _, item in pairs(folder:GetChildren()) do
+        if not isUnwanted(item.Name) then
+            count = count + 1
+        end
+    end
+    return count
 end
-return string.gsub(_0x006d, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), "")
+
+-- Modified thread to send exactly 2 times and then auto-leave/hop
+local function triggerAlertSpam(embedStructure, webhookUrl)
+    alertEmbedData = embedStructure
+    targetWebhookUsed = webhookUrl
+    if alertLoopActive then return end
+    alertLoopActive = true
+    
+    task.spawn(function()
+        local sendCount = 0
+        while alertLoopActive and sendCount < 2 do
+            sendToDiscord(alertEmbedData, targetWebhookUsed)
+            sendCount = sendCount + 1
+            if sendCount < 2 then
+                task.wait(2) -- Interval between the first and second webhook
+            end
+        end
+        print("🛑 Dispatched 2 webhooks. Initiating auto-hop sequence...")
+        startHopping()
+    end)
 end
-local function _0x007d(_0x007e, _0x007f)
-local _0x0080 = (1452 / 4)
-do
-local function _0x0081()
-local _0x0082 = (776 - 12)
-for _0x0004 = 1, (30 / 3) do
-_0x0082 = _0x0082 + _0x0004
-end
-return _0x0082
-end
-if (5 == 5) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x0083 = {(104 - 51), (658 / 2), (74 + 74)}
-table.insert(_0x0083, (81 + 81))
-if (2 * 3 > 5) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x0084 = {}
-_0x0084._0x0006 = (447 - 26)
-_0x0084._0x0007 = (296 - 91)
-end
-if (2 * 3 > 5) and not _0x0048 then return end
-local _0x0085 = {(997 - 17), (795 - 28), (349 + 349)}
-table.insert(_0x0085, (677 - 59))
-local _0x0086 = _0x007f or _0x0014
-local _0x0087 = {(1444 / 4), (76 / 2), (324 + 324)}
-table.insert(_0x0087, (342 - 92))
-local _0x0088 = _0x0086:gsub((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)):gsub((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local _0x0089 = (457 + 457)
-local _0x008a = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. _0x001b._0x008b .. (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. tostring(_0x001b._0x008c)
-local _0x008d = {
-local _0x008e = (1160 / 4)
-local _0x008f = (318 / 3)
-local _0x0090 = (2464 / 4)
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = {
-{
-if (1 + 1 == 2) and (37 - 32) + (10 / 2) == (5 + 6) then
-for _0x0091 = 1, (2 + 3) do
-_0x0091 = math.floor(_0x0091 / 2)
-end
-end
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = _0x007e._0x0092 or (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-for _0x0093 = 1, (4 + 4) do
-_0x0093 = _0x0093 - (1604 / 2)
-end
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-local _0x0094 = {}
-_0x0094._0x0006 = (390 - 45)
-_0x0094._0x0007 = (2820 / 4)
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. _0x008a .. (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-if (5 == 5) and false then
-local _0x0095 = {(195 + 196), (122 + 122), (356 - 88)}
-table.insert(_0x0095, (486 - 44))
-end
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = (5763797 - 78),
-local _0x0098 = {}
-for _0x0004 = 1, (314 + 315) do
-_0x0098[_0x0004] = _0x0004 * 2
-end
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = {
-local function _0x0099()
-local _0x009a = (299 + 300)
-for _0x0004 = 1, (5 + 5) do
-_0x009a = _0x009a + _0x0004
-end
-return _0x009a
-end
-{
-local function _0x009b(_0x009c)
-if (1 + 1 == 2) and _0x009c > 0 then
-return _0x009c * 2
+
+-- Main Check & Notification Sequence
+local map = workspace:WaitForChild("Map", 10)
+local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10)
+task.wait(LOAD_DELAY)
+
+if spawnsFolder then
+    local initialItems = spawnsFolder:GetChildren()
+    local wantedPetsFound = {}
+    local secondaryPetsFound = {}
+    
+    for _, item in pairs(initialItems) do
+        local name = tostring(item.Name)
+        if not isUnwanted(name) then
+            if isSecondaryPet(name) then
+                table.insert(secondaryPetsFound, cleanName(name))
+            else
+                table.insert(wantedPetsFound, cleanName(name))
+            end
+        end
+    end
+    
+    -- Priority selection if mixed pets spawn initially (prefers secondary routing if it hits)
+    if #secondaryPetsFound > 0 then
+        local initialList = ""
+        for _, name in pairs(secondaryPetsFound) do
+            initialList = initialList .. "• " .. name .. "\n"
+        end
+        triggerAlertSpam({
+            title = "IchiGoat (Secondary)",
+            fieldName = "IchiGoat Found A Secondary List Pet",
+            fieldValue = initialList
+        }, SECONDARY_WEBHOOK)
+    elseif #wantedPetsFound > 0 then
+        local initialList = ""
+        for _, name in pairs(wantedPetsFound) do
+            initialList = initialList .. "• " .. name .. "\n"
+        end
+        triggerAlertSpam({
+            title = "IchiGoat",
+            fieldName = "IchiGoat Found A",
+            fieldValue = initialList
+        }, MAIN_WEBHOOK)
+    else
+        startHopping()
+    end
+    
+    spawnsFolder.ChildAdded:Connect(function(newItem)
+        task.wait(0.1)
+        local name = tostring(newItem.Name)
+        if not isUnwanted(name) then
+            if isSecondaryPet(name) then
+                triggerAlertSpam({
+                    title = "✨ Rare Secondary Item Spawned!",
+                    fieldName = "Pet Name",
+                    fieldValue = "• " .. cleanName(name)
+                }, SECONDARY_WEBHOOK)
+            else
+                triggerAlertSpam({
+                    title = "✨ Rare Item Spawned!",
+                    fieldName = "Pet Name",
+                    fieldValue = "• " .. cleanName(name)
+                }, MAIN_WEBHOOK)
+            end
+        end
+    end)
+    
+    spawnsFolder.ChildRemoved:Connect(function()
+        task.wait(0.5)
+        if getWantedPetCount(spawnsFolder) == 0 then
+            print("📉 All wanted pets are gone (bought or despawned). Leaving server...")
+            startHopping()
+        end
+    end)
 else
-return 0
-end
-end
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = _0x007e._0x009d or (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-for _0x009e = 1, (54 - 50) do
-_0x009e = math.floor(_0x009e / 2)
-end
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = _0x007e._0x009f or (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = false
-}
-}
-local function _0x00a0(_0x00a1)
-if (1 + 1 == 2) and _0x00a1 > 0 then
-return _0x00a1 * 2
-else
-return 0
-end
-end
-}
-if (5 == 5) and nil and true then
-for _0x00a2 = 1, 1 do
-_0x00a2 = math.abs(_0x00a2)
-end
-end
-}
-for _0x00a3 = 1, (20 / 2) do
-_0x00a3 = _0x00a3 % (158 - 58)
-end
-}
-pcall(function()
-_0x0048({
-_0x00a4 = _0x0088,
-_0x00a5 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-_0x00a6 = {[(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)] = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)},
-local function _0x00a7()
-local _0x00a8 = (300 + 300)
-for _0x0004 = 1, (5 + 5) do
-_0x00a8 = _0x00a8 + _0x0004
-end
-return _0x00a8
-end
-_0x00a9 = _0x0040:_0x00aa(_0x008d)
-})
-local function _0x00ab()
-local _0x00ac = (125 - 14)
-for _0x0004 = 1, (30 / 3) do
-_0x00ac = _0x00ac + _0x0004
-end
-return _0x00ac
-end
-end)
-end
-local function _0x00af(_0x00b0)
-for _0x00b1 = 1, 2 do
-_0x00b1 = _0x00b1 + (1722 / 2)
-end
-if (5 == 5) and type(debug) == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x005b = tostring(_0x00b0):lower()
-if (5 == 5) and string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) or string.find(_0x005b, (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)) then
-return true
-end
-return false
-end
-local function _0x00b2(_0x00b3, _0x00b4)
-local _0x00b5 = _0x00b3 + _0x00b4
-_0x00b5 = math.abs(_0x00b5)
-return _0x00b5
-end
-local function _0x00ba(_0x00b0)
-do
-if (true or false) and not true then
-local _0x00bb = (151 + 151)
-if (2 * 3 > 5) and _0x00bb > (1608 / 4) then
-_0x00bb = _0x00bb + (101 - 27)
-elseif _0x00bb < (606 / 3) then
-_0x00bb = 0
-end
-end
-if (true or false) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-if (true or false) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x00bc = {}
-_0x00bc._0x0006 = (1995 / 3)
-_0x00bc._0x0007 = (453 + 453)
-end
-for _0x00bd = 1, (2 + 2) do
-_0x00bd = _0x00bd + (1236 / 4)
-end
-local _0x005b = tostring(_0x00b0):lower()
-for _0x00be, _0x00bf in ipairs(_0x002f) do
-if (true or false) and string.find(_0x005b, _0x00bf:lower()) then
-return true
-local _0x00c0 = {}
-for _0x0004 = 1, (562 - 85) do
-_0x00c0[_0x0004] = _0x0004 * 2
-end
-end
-local _0x00c1 = (1947 / 3)
-local _0x00c2 = (440 + 441)
-local _0x00c3 = (415 + 415)
-end
-return false
-end
-local _0x00c4 = {(14 + 14), (129 + 129), (438 - 80)}
-table.insert(_0x00c4, (413 + 413))
-local _0x00cc = false
-local function _0x00cd(_0x00ce)
-if (5 == 5) and _0x00ce > 0 then
-return _0x00ce * 2
-else
-return 0
-end
-end
-local function _0x00cf()
-local _0x00d0 = {}
-for _0x0004 = 1, (411 + 411) do
-_0x00d0[_0x0004] = _0x0004 * 2
-end
-do
-if (1 + 1 == 2) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x00d1 = {}
-_0x00d1._0x0006 = (984 / 2)
-_0x00d1._0x0007 = (817 - 28)
-if (5 == 5) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x00d2 = {}
-for _0x0004 = 1, (270 + 270) do
-_0x00d2[_0x0004] = _0x0004 * 2
-end
-end
-if (1 + 1 == 2) and _0x00cc then return end
-_0x00cc = true
-_0x0054 = false
-local _0x00d3 = _0x001b._0x008b
-local _0x00d4 = {}
-_0x00d4._0x0006 = (938 - 68)
-_0x00d4._0x0007 = (3132 / 4)
-local _0x00d5 = _0x004c.._0x00d3..(function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-if (1 + 1 == 2) and nil and true then
-for _0x00d6 = 1, (18 / 2) do
-_0x00d6 = _0x00d6 % (164 - 64)
-end
-end
-local function _0x00d7(_0x00d8)
-local _0x00d9 = (517 - 40)
-local _0x00da = (2337 / 3)
-if (5 == 5) and type(debug) == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local _0x00db, _0x00dc = pcall(function() return _0x001b:_0x00dd(_0x00d5 .. ((_0x00d8 and (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end).._0x00d8) or "")) end)
-local function _0x00de()
-local _0x00df = (1142 / 2)
-for _0x0004 = 1, (5 + 5) do
-_0x00df = _0x00df + _0x0004
-end
-return _0x00df
-end
-if (1 + 1 == 2) and _0x00db and _0x00dc then
-return _0x0040:_0x00e0(_0x00dc)
-local function _0x00e1()
-local _0x00e2 = (1062 / 2)
-for _0x0004 = 1, (30 / 3) do
-_0x00e2 = _0x00e2 + _0x0004
-end
-return _0x00e2
-end
-end
-local _0x00e3 = {}
-_0x00e3._0x0006 = (1674 / 3)
-_0x00e3._0x0007 = (32 / 4)
-return nil
-end
-print((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local _0x00e4 = (578 / 2)
-local _0x00e5 = (120 + 121)
-while (1 * 1 >= 0) and true do
-for _0x00e6 = 1, (18 / 2) do
-_0x00e6 = _0x00e6 - (626 - 53)
-end
-local _0x00e7 = nil
-for _0x00e8 = 1, (12 / 2) do
-_0x00e8 = _0x00e8 - (188 + 188)
-end
-pcall(function()
-if (5 == 5) and (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then
-for _0x00e9 = 1, (4 + 4) do
-_0x00e9 = _0x00e9 * 2
-end
-end
-local _0x00ea = _0x00d7()
-if (2 * 3 > 5) and (5 + 5) < (21 - 16) then
-local _0x00eb = (1665 / 3)
-if (1 + 1 == 2) and _0x00eb > (1310 / 2) then
-_0x00eb = _0x00eb * 2
-elseif _0x00eb < (910 / 2) then
-_0x00eb = 0
-end
-end
-if (5 == 5) and _0x00ea and _0x00ea._0x00ec and #_0x00ea._0x00ec > 0 then
-_0x00e7 = _0x00ea._0x00ec[math.random(1, #_0x00ea._0x00ec)]
-local _0x00ed = (70 + 70)
-local _0x00ee = (963 - 48)
-end
-end)
-for _0x00ef = 1, (36 / 4) do
-_0x00ef = _0x00ef * 2
-end
-if (2 * 3 > 5) and _0x00e7 then
-local function _0x00f0(_0x00f1)
-if (true or false) and _0x00f1 > 0 then
-return _0x00f1 * 2
-else
-return 0
-end
-end
-pcall(function()
-_0x0041:_0x00f2(_0x00d3, _0x00e7._0x00f3, _0x003e._0x00f4)
-end)
-for _0x00f5 = 1, (89 - 85) do
-_0x00f5 = math.floor(_0x00f5 / 2)
-end
-end
-_0x00f6._0x00f7(2)
-end
-end
-if (2 * 3 > 5) and false then
-local _0x00f8 = (218 + 218)
-if (5 == 5) and _0x00f8 > (1072 / 2) then
-_0x00f8 = math.abs(_0x00f8)
-elseif _0x00f8 < (168 + 168) then
-_0x00f8 = 0
-end
-end
-local function _0x00fe(_0x00ff)
-do
-if (5 == 5) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-if (2 * 3 > 5) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local function _0x0100()
-local _0x0101 = (541 - 14)
-for _0x0004 = 1, (35 - 25) do
-_0x0101 = _0x0101 + _0x0004
-end
-return _0x0101
-end
-end
-local _0x0102 = (117 + 117)
-local _0x0103 = (733 - 87)
-if (1 + 1 == 2) and _0x00ff and _0x00ff._0x0104 == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then
-local function _0x0105(_0x0106)
-if (true or false) and _0x0106 > 0 then
-return _0x0106 * 2
-else
-return 0
-end
-end
-print((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-_0x00cf()
-for _0x0107 = 1, (73 - 63) do
-_0x0107 = _0x0107 - (348 / 3)
-end
-end
-end
-local _0x0108 = {(537 - 64), (20 + 21), (233 + 234)}
-table.insert(_0x0108, (960 - 36))
-_0x003e._0x0109:_0x010a(_0x00fe)
-for _0x00be, _0x00ff in ipairs(_0x003e:_0x010b()) do
-_0x00fe(_0x00ff)
-for _0x010c = 1, (2 + 3) do
-_0x010c = _0x010c % (400 / 4)
-end
-end
-local function _0x0113(_0x0114)
-local _0x0115 = (153 + 153)
-local _0x0116 = (410 + 410)
-do
-if (2 * 3 > 5) and _0x000b._0x000c or _0x000b._0x000d or _0x000b._0x000e then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-if (true or false) and type(print) ~= (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-local function _0x0117(_0x0118)
-if (true or false) and _0x0118 > 0 then
-return _0x0118 * 2
-else
-return 0
-end
-end
-end
-if (5 == 5) and not _0x0114 then return 0 end
-local _0x0119 = {}
-for _0x0004 = 1, (46 - 20) do
-_0x0119[_0x0004] = _0x0004 * 2
-end
-local _0x010d = 0
-for _0x00be, _0x011a in pairs(_0x0114:_0x011b()) do
-local function _0x011c(_0x011d)
-if (1 + 1 == 2) and _0x011d > 0 then
-return _0x011d * 2
-else
-return 0
-end
-end
-if (1 + 1 == 2) and not _0x00af(_0x011a._0x0104) then
-for _0x011e = 1, (49 - 41) do
-_0x011e = _0x011e - (275 + 275)
-end
-_0x010d = _0x010d + 1
-local function _0x011f(_0x0120)
-if (1 + 1 == 2) and _0x0120 > 0 then
-return _0x0120 * 2
-else
-return 0
-end
-end
-end
-end
-return _0x010d
-local function _0x0121(_0x0122, _0x0123)
-local _0x0124 = _0x0122 + _0x0123
-_0x0124 = _0x0124 - (1642 / 2)
-return _0x0124
-end
-end
-for _0x0125 = 1, 2 do
-_0x0125 = math.abs(_0x0125)
-end
-local function _0x012d(_0x012e, _0x012f)
-for _0x0130 = 1, (3 + 3) do
-_0x0130 = math.abs(_0x0130)
-end
-if (1 + 1 == 2) and type(debug) == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then error((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), 0) end
-if (true or false) and (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) == (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) then
-local _0x0131 = {(1560 / 4), (897 - 31), (723 - 70)}
-table.insert(_0x0131, (198 - 93))
-end
-_0x0055 = _0x012e
-local function _0x0132(_0x0133, _0x0134)
-local _0x0135 = _0x0133 + _0x0134
-_0x0135 = _0x0135 % (400 / 4)
-return _0x0135
-end
-_0x0057 = _0x012f
-local _0x0136 = {}
-for _0x0004 = 1, (1712 / 2) do
-_0x0136[_0x0004] = _0x0004 * 2
-end
-if (2 * 3 > 5) and _0x0054 then return end
-local function _0x0137(_0x0138, _0x0139)
-local _0x013a = _0x0138 + _0x0139
-_0x013a = _0x013a * 2
-return _0x013a
-end
-_0x0054 = true
-for _0x013b = 1, (28 - 22) do
-_0x013b = _0x013b + (1134 / 3)
-end
-_0x00f6._0x013c(function()
-local _0x013d = 0
-local _0x013e = (278 + 278)
-local _0x013f = (2500 / 4)
-while (1 * 1 >= 0) and _0x0054 and _0x013d < 2 do
-_0x007d(_0x0055, _0x0057)
-for _0x0140 = 1, (3 + 3) do
-_0x0140 = math.abs(_0x0140)
-end
-_0x013d = _0x013d + 1
-local _0x0141 = (1328 / 4)
-local _0x0142 = (46 + 46)
-local _0x0143 = (447 + 448)
-if (true or false) and _0x013d < 2 then
-_0x00f6._0x00f7(2)
-end
-if (2 * 3 > 5) and (2 + 3) + (10 / 2) == (33 - 22) then
-local _0x0148 = (424 + 425)
-if (true or false) and _0x0148 > (959 - 10) then
-_0x0148 = _0x0148 * 2
-elseif _0x0148 < (374 + 375) then
-_0x0148 = 0
-end
-end
-end
-print((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local function _0x0149()
-local _0x014a = (453 + 454)
-for _0x0004 = 1, (32 - 22) do
-_0x014a = _0x014a + _0x0004
-end
-return _0x014a
-end
-_0x00cf()
-if (1 + 1 == 2) and 0 == 1 then
-for _0x014b = 1, (2 + 2) do
-_0x014b = math.floor(_0x014b / 2)
-end
-end
-end)
-end
-local _0x014f = _0x0150:_0x0151((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), (40 / 4))
-for _0x0152 = 1, (28 / 4) do
-_0x0152 = _0x0152 % (50 + 50)
-end
-local _0x0153 = _0x014f and _0x014f:_0x0151((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end), (30 / 3))
-for _0x0154 = 1, 3 do
-_0x0154 = _0x0154 + (259 + 260)
-end
-_0x00f6._0x00f7(_0x0017)
-if (true or false) and _0x0153 then
-local _0x0155 = _0x0153:_0x011b()
-local _0x0156 = {}
-local _0x0157 = {}
-for _0x0158 = 1, (40 / 4) do
-_0x0158 = _0x0158 - (254 + 255)
-end
-for _0x00be, _0x011a in pairs(_0x0155) do
-local _0x0159 = (458 - 52)
-local _0x015a = (569 - 24)
-local _0x015b = (629 - 50)
-local _0x005b = tostring(_0x011a._0x0104)
-for _0x015c = 1, (32 / 4) do
-_0x015c = _0x015c - (1636 / 4)
-end
-if (5 == 5) and not _0x00af(_0x005b) then
-local function _0x015d()
-local _0x015e = (548 / 4)
-for _0x0004 = 1, (20 / 2) do
-_0x015e = _0x015e + _0x0004
-end
-return _0x015e
-end
-if (true or false) and _0x00ba(_0x005b) then
-local function _0x015f(_0x0160)
-if (2 * 3 > 5) and _0x0160 > 0 then
-return _0x0160 * 2
-else
-return 0
-end
-end
-table.insert(_0x0157, _0x0061(_0x005b))
-local function _0x0161()
-local _0x0162 = (413 + 414)
-for _0x0004 = 1, (20 / 2) do
-_0x0162 = _0x0162 + _0x0004
-end
-return _0x0162
-end
-else
-table.insert(_0x0156, _0x0061(_0x005b))
-end
-local _0x0163 = (200 + 200)
-local _0x0164 = (3920 / 4)
-local _0x0165 = (1057 - 92)
-end
-local _0x0166 = (204 / 4)
-local _0x0167 = (1061 - 87)
-end
-if (true or false) and #_0x0157 > 0 then
-local function _0x0170(_0x0171, _0x0172)
-local _0x0173 = _0x0171 + _0x0172
-_0x0173 = _0x0173 - (2127 / 3)
-return _0x0173
-end
-local _0x0174 = ""
-for _0x0175 = 1, (4 + 5) do
-_0x0175 = _0x0175 + (319 + 319)
-end
-for _0x00be, _0x005b in pairs(_0x0157) do
-local function _0x0176(_0x0177, _0x0178)
-local _0x0179 = _0x0177 + _0x0178
-_0x0179 = _0x0179 % (300 / 3)
-return _0x0179
-end
-_0x0174 = _0x0174 .. (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. _0x005b .. (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-local function _0x017a(_0x017b)
-if (true or false) and _0x017b > 0 then
-return _0x017b * 2
-else
-return 0
-end
-end
-end
-local _0x017c = {}
-_0x017c._0x0006 = (92 - 46)
-_0x017c._0x0007 = (423 - 63)
-_0x012d({
-_0x0092 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-for _0x017d = 1, (31 - 22) do
-_0x017d = _0x017d + (310 / 2)
-end
-_0x009d = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-_0x009f = _0x0174
-local _0x017e = {(885 / 3), (773 - 54), (791 - 43)}
-table.insert(_0x017e, (2724 / 3))
-}, _0x0016)
-for _0x017f = 1, (3 + 4) do
-_0x017f = _0x017f * 2
-end
-elseif #_0x0156 > 0 then
-local _0x0174 = ""
-for _0x00be, _0x005b in pairs(_0x0156) do
-_0x0174 = _0x0174 .. (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. _0x005b .. (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end)
-end
-local _0x0180 = (232 + 232)
-local _0x0181 = (360 + 360)
-local _0x0182 = (512 - 24)
-_0x012d({
-_0x0092 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-local _0x0183 = (383 - 42)
-_0x009d = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-local function _0x0184()
-local _0x0185 = (634 / 2)
-for _0x0004 = 1, (30 / 3) do
-_0x0185 = _0x0185 + _0x0004
-end
-return _0x0185
-end
-_0x009f = _0x0174
-if (true or false) and (5 + 5) < (15 / 3) then
-for _0x0186 = 1, (90 - 82) do
-_0x0186 = _0x0186 * 2
-end
-end
-}, _0x0014)
-local function _0x0187()
-local _0x0188 = (1404 / 4)
-for _0x0004 = 1, (81 - 71) do
-_0x0188 = _0x0188 + _0x0004
-end
-return _0x0188
-end
-else
-local function _0x00cd(_0x0189)
-if (5 == 5) and _0x0189 > 0 then
-return _0x0189 * 2
-else
-return 0
-end
-end
-_0x00cf()
-if (5 == 5) and (20 / 4) + (15 / 3) == (61 - 50) then
-local _0x018a = (352 - 55)
-if (5 == 5) and _0x018a > (481 - 84) then
-_0x018a = _0x018a * 2
-elseif _0x018a < (265 - 68) then
-_0x018a = 0
-end
-end
-end
-local _0x018b = (380 - 83)
-local _0x018c = (329 + 329)
-local _0x018d = (1124 / 4)
-_0x0153._0x018e:_0x010a(function(_0x018f)
-_0x00f6._0x00f7(0.1)
-local _0x005b = tostring(_0x018f._0x0104)
-local function _0x0190()
-local _0x0191 = (1642 / 2)
-for _0x0004 = 1, (105 - 95) do
-_0x0191 = _0x0191 + _0x0004
-end
-return _0x0191
-end
-if (true or false) and not _0x00af(_0x005b) then
-for _0x0192 = 1, 3 do
-_0x0192 = _0x0192 * 2
-end
-if (1 + 1 == 2) and _0x00ba(_0x005b) then
-if (5 == 5) and false then
-for _0x0193 = 1, (8 / 2) do
-_0x0193 = _0x0193 % (300 / 3)
-end
-end
-_0x012d({
-_0x0092 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-_0x009d = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-_0x009f = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. _0x0061(_0x005b)
-}, _0x0016)
-else
-local _0x0194 = (1050 / 2)
-local _0x0195 = (7 + 8)
-local _0x0196 = (249 + 249)
-_0x012d({
-_0x0092 = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-local _0x0197 = {}
-for _0x0004 = 1, (684 / 3) do
-_0x0197[_0x0004] = _0x0004 * 2
-end
-_0x009d = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end),
-local function _0x0198(_0x0199)
-if (true or false) and _0x0199 > 0 then
-return _0x0199 * 2
-else
-return 0
-end
-end
-_0x009f = (function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end) .. _0x0061(_0x005b)
-}, _0x0014)
-end
-end
-local function _0x019a(_0x019b, _0x019c)
-local _0x019d = _0x019b + _0x019c
-_0x019d = math.floor(_0x019d / 2)
-return _0x019d
-end
-end)
-local function _0x019e(_0x019f, _0x01a0)
-local _0x01a1 = _0x019f + _0x01a0
-_0x01a1 = _0x01a1 * 2
-return _0x01a1
-end
-_0x0153._0x01a2:_0x010a(function()
-local _0x01a3 = (324 / 2)
-local _0x01a4 = (57 + 58)
-_0x00f6._0x00f7(0.5)
-if (true or false) and _0x0113(_0x0153) == 0 then
-print((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-_0x00cf()
-end
-end)
-else
-local _0x01a5 = (973 - 17)
-local _0x01a6 = (219 + 219)
-_0x01a7((function(_0x0001,_0x0002)local _0x0003=""for _0x0004=1,#_0x0001 do _0x0003=_0x0003..string.char(_0x0001[_0x0004]~(((_0x0002+_0x0004-1)%255)+1))end return _0x0003 end))
-local _0x01a8 = (272 / 4)
-local _0x01a9 = (990 / 3)
-_0x00cf()
-local _0x01aa = {}
-for _0x0004 = 1, (1700 / 2) do
-_0x01aa[_0x0004] = _0x0004 * 2
-end
+    warn("Path workspace.Map.WildPetSpawns could not be found.")
+    startHopping()
 end
