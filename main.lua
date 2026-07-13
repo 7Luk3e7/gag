@@ -7,7 +7,8 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 local SECONDARY_LIST = {
     "racoon",
     "unicorn",
-    "owl"
+    "owl",
+    "frog"
     -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
 }
 
