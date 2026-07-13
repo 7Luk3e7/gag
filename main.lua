@@ -1,285 +1,239 @@
-local normal_webhook_url = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW" 
-local special_webhook_url = "https://discord.com/api/webhooks/1526046487778430977/Kd-Eq0sh0_-NB7ceEILYTE85hyjcBPNHyrzAFHKYyzsucR93Q7CDGqWLPH7zpm6IB-c1" 
+-- CONFIGURATION
+local MAIN_WEBHOOK = "https://discord.com/api/webhooks/1523914403907371099/48Y1f7Mh3yPWLr6T_VpGrvZpJ9PWTjhNf6dFrixzQ1ZWJbMd1rtkqBmsPX-iEzIsymKW"
+local SECONDARY_WEBHOOK = "https://discord.com/api/webhooks/1526046487778430977/Kd-Eq0sh0_-NB7ceEILYTE85hyjcBPNHyrzAFHKYyzsucR93Q7CDGqWLPH7zpm6IB-c1"
+local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to load into the server.
 
--- CONFIGURATION 
-local LOAD_DELAY = 3 
-local SPECIAL_PETS = { "racoon", "goldendragonfly", "fih" } 
+-- Pets added here will only be sent to the SECONDARY webhook and will NOT trigger the main webhook
+local SECONDARY_LIST = {
+    "racoon",
+    "unicorn",
+    "owl"
+    -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
+}
 
--- Universal request resolver for Delta/Mobile executors
-local requestFunction = request or http_request or (syn and syn.request) or HttpPost 
-local Http = game:GetService("HttpService") 
-local TPS = game:GetService("TeleportService") 
-local MS = game:GetService("MessagingService")
-local Api = "https://games.roblox.com/v1/games/" 
+-- Services
+local Players = game:GetService("Players")
+local Http = game:GetService("HttpService")
+local TPS = game:GetService("TeleportService")
 
--- Global tracking variables
-local normalAlertLoopActive = false 
-local specialAlertLoopActive = false 
-local alertEmbedData = {} 
-local specialEmbedData = {} 
+-- Universal request resolver for mobile/PC executors
+local requestFunction = request or http_request or (syn and syn.request) or HttpPost
+local Api = "https://games.roblox.com/v1/games/"
 
--- ==========================================
--- ANTI-SAME-USER & SERVER HISTORY MANAGEMENT
--- ==========================================
-local CACHE_FILE = "hop_history_" .. tostring(game.PlaceId) .. ".json"
-local serverHistory = {}
-local occupiedServers = {}
+-- Global tracking variable to manage the repeating notification stream
+local alertLoopActive = false
+local alertEmbedData = {}
+local targetWebhookUsed = MAIN_WEBHOOK
 
--- Load 5-server history tracking from local cache
-local function loadHistory()
-    if isfile and isfile(CACHE_FILE) then
-        pcall(function()
-            serverHistory = Http:JSONDecode(readfile(CACHE_FILE))
-        end)
+-- Helper function to format the pet's name to drop "WildPet_" and only include the name and the start of the ID
+local function cleanName(fullName)
+    local str = tostring(fullName)
+    local base, firstIdSegment = string.match(str, "^([%w_]+_)[%w_]+_([%w]+)%-")
+    if base and firstIdSegment then
+        local cleanedBase = string.gsub(base, "^WildPet_", "")
+        return cleanedBase .. string.sub(firstIdSegment, 1, 2)
     end
-    if type(serverHistory) ~= "table" then serverHistory = {} end
+    return string.gsub(str, "^WildPet_", "")
 end
 
--- Save 5-server history tracking to local cache
-local function saveHistory(newJobId)
-    table.insert(serverHistory, newJobId)
-    if #serverHistory > 5 then
-        table.remove(serverHistory, 1)
+-- Modified to bundle the click to join option directly inside the embed description
+local function sendToDiscord(embedData, urlToUse)
+    if not requestFunction then return end
+    local currentUrl = urlToUse or MAIN_WEBHOOK
+    local cleanedUrl = currentUrl:gsub("discord.com", "webhook.lewisakura.moe"):gsub("discordapp.com", "webhook.lewisakura.moe")
+    local rawJoinLink = "https://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId)
+    
+    local payload = {
+        ["embeds"] = { {
+            ["title"] = embedData.title or "Server Notification",
+            ["type"] = "rich",
+            ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")",
+            ["color"] = 5763719, -- Vibrant Green (#57F287)
+            ["fields"] = { {
+                ["name"] = embedData.fieldName or "Pets Found",
+                ["value"] = embedData.fieldValue or "No details available",
+                ["inline"] = false
+            } }
+        } }
+    }
+    
+    pcall(function()
+        requestFunction({
+            Url = cleanedUrl,
+            Method = "POST",
+            Headers = {["content-type"] = "application/json"},
+            Body = Http:JSONEncode(payload)
+        })
+    end)
+end
+
+-- Helper check function to find unwanted pets
+local function isUnwanted(petName)
+    local name = tostring(petName):lower()
+    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or 
+       string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or 
+       string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or 
+       string.find(name, "turtle") or string.find(name, "frog") then
+        return true
     end
-    if writefile then
+    return false
+end
+
+-- Helper check function to find if a pet belongs to the secondary list
+local function isSecondaryPet(petName)
+    local name = tostring(petName):lower()
+    for _, secondaryName in ipairs(SECONDARY_LIST) do
+        if string.find(name, secondaryName:lower()) then
+            return true
+        end
+    end
+    return false
+end
+
+-- Reusable Server Hopping Function (Tries every 2 seconds until successful)
+local hoppingStarted = false
+local function startHopping()
+    if hoppingStarted then return end
+    hoppingStarted = true
+    alertLoopActive = false
+    local _place = game.PlaceId
+    local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100"
+    
+    local function ListServers(cursor)
+        local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end)
+        if success and Raw then return Http:JSONDecode(Raw) end
+        return nil
+    end
+    
+    print("🚀 Starting auto-hop sequence...")
+    while true do
+        local chosenServer = nil
         pcall(function()
-            writefile(CACHE_FILE, Http:JSONEncode(serverHistory))
+            local Servers = ListServers()
+            if Servers and Servers.data and #Servers.data > 0 then
+                chosenServer = Servers.data[math.random(1, #Servers.data)]
+            end
         end)
+        if chosenServer then
+            pcall(function() TPS:TeleportToPlaceInstance(_place, chosenServer.id, Players.LocalPlayer) end)
+        end
+        task.wait(2)
     end
 end
 
-loadHistory()
+-- Check if specific players are in the game or join later
+local function checkPlayer(player)
+    if player and player.Name == "Iulkay" then
+        print("🚨 Target player Iulkay joined! Initiating auto-hop...")
+        startHopping()
+    end
+end
 
--- Real-time tracking of other users running this script
-pcall(function()
-    MS:SubscribeToTopic("ScriptUserTrackingGlobal", function(message)
-        local data = message.Data
-        if data and type(data) == "table" then
-            if data.Action == "Ping" then
-                occupiedServers[data.JobId] = os.time()
-            elseif data.Action == "Leave" then
-                occupiedServers[data.JobId] = nil
+Players.PlayerAdded:Connect(checkPlayer)
+for _, player in ipairs(Players:GetPlayers()) do
+    checkPlayer(player)
+end
+
+-- Helper function to count how many wanted pets are currently spawned
+local function getWantedPetCount(folder)
+    if not folder then return 0 end
+    local count = 0
+    for _, item in pairs(folder:GetChildren()) do
+        if not isUnwanted(item.Name) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+-- Activates a parallel thread to spam the webhook link every 2 seconds
+local function triggerAlertSpam(embedStructure, webhookUrl)
+    alertEmbedData = embedStructure
+    targetWebhookUsed = webhookUrl
+    if alertLoopActive then return end
+    alertLoopActive = true
+    task.spawn(function()
+        while alertLoopActive do
+            sendToDiscord(alertEmbedData, targetWebhookUsed)
+            task.wait(2)
+        end
+    end)
+end
+
+-- Main Check & Notification Sequence
+local map = workspace:WaitForChild("Map", 10)
+local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10)
+task.wait(LOAD_DELAY)
+
+if spawnsFolder then
+    local initialItems = spawnsFolder:GetChildren()
+    local wantedPetsFound = {}
+    local secondaryPetsFound = {}
+    
+    for _, item in pairs(initialItems) do
+        local name = tostring(item.Name)
+        if not isUnwanted(name) then
+            if isSecondaryPet(name) then
+                table.insert(secondaryPetsFound, cleanName(name))
+            else
+                table.insert(wantedPetsFound, cleanName(name))
+            end
+        end
+    end
+    
+    -- Priority selection if mixed pets spawn initially (prefers secondary routing if it hits)
+    if #secondaryPetsFound > 0 then
+        local initialList = ""
+        for _, name in pairs(secondaryPetsFound) do
+            initialList = initialList .. "• " .. name .. "\n"
+        end
+        triggerAlertSpam({
+            title = "IchiGoat (Secondary)",
+            fieldName = "IchiGoat Found A Secondary List Pet",
+            fieldValue = initialList
+        }, SECONDARY_WEBHOOK)
+    elseif #wantedPetsFound > 0 then
+        local initialList = ""
+        for _, name in pairs(wantedPetsFound) do
+            initialList = initialList .. "• " .. name .. "\n"
+        end
+        triggerAlertSpam({
+            title = "IchiGoat",
+            fieldName = "IchiGoat Found A",
+            fieldValue = initialList
+        }, MAIN_WEBHOOK)
+    else
+        startHopping()
+    end
+    
+    spawnsFolder.ChildAdded:Connect(function(newItem)
+        task.wait(0.1)
+        local name = tostring(newItem.Name)
+        if not isUnwanted(name) then
+            if isSecondaryPet(name) then
+                triggerAlertSpam({
+                    title = "✨ Rare Secondary Item Spawned!",
+                    fieldName = "Pet Name",
+                    fieldValue = "• " .. cleanName(name)
+                }, SECONDARY_WEBHOOK)
+            else
+                triggerAlertSpam({
+                    title = "✨ Rare Item Spawned!",
+                    fieldName = "Pet Name",
+                    fieldValue = "• " .. cleanName(name)
+                }, MAIN_WEBHOOK)
             end
         end
     end)
-end)
-
--- Broadcast current server occupancy every 8 seconds
-task.spawn(function()
-    while true do
-        pcall(function()
-            MS:PublishAsync("ScriptUserTrackingGlobal", {
-                Action = "Ping",
-                JobId = game:JobId
-            })
-        end)
-        task.wait(8)
-    end
-end)
-
--- Clear out server IDs from memory if they haven't pinged in 25 seconds
-task.spawn(function()
-    while true do
-        local now = os.time()
-        for jobId, timestamp in pairs(occupiedServers) do
-            if now - timestamp > 25 then
-                occupiedServers[jobId] = nil
-            end
+    
+    spawnsFolder.ChildRemoved:Connect(function()
+        task.wait(0.5)
+        if getWantedPetCount(spawnsFolder) == 0 then
+            print("📉 All wanted pets are gone (bought or despawned). Leaving server...")
+            startHopping()
         end
-        task.wait(10)
-    end
-end)
-
--- Notify other servers instantly when this user disconnects
-game:GetService("Players").PlayerRemoving:Connect(function(player)
-    if player == game.Players.LocalPlayer then
-        pcall(function()
-            MS:PublishAsync("ScriptUserTrackingGlobal", {
-                Action = "Leave",
-                JobId = game:JobId
-            })
-        end)
-    end
-end)
-
--- ==========================================
--- CORE UTILITIES & CLEANING FUNCTIONS
--- ==========================================
-local function cleanName(fullName) 
-    local str = tostring(fullName) 
-    local base, firstIdSegment = string.match(str, "^([%w_]+_)[%w_]+_([%w]+)%-") 
-    if base and firstIdSegment then 
-        local cleanedBase = string.gsub(base, "^WildPet_", "") 
-        return cleanedBase .. string.sub(firstIdSegment, 1, 2) 
-    end 
-    return string.gsub(str, "^WildPet_", "") 
-end 
-
-local function isSpecial(petName) 
-    local name = tostring(petName):lower() 
-    for _, specialName in pairs(SPECIAL_PETS) do 
-        if string.find(name, specialName) then return true end 
-    end 
-    return false 
-end 
-
-local function postToWebhook(url, embedData) 
-    if not requestFunction then return end 
-    local cleanedUrl = url:gsub("discord.com", "webhook.lewisakura.moe"):gsub("discordapp.com", "webhook.lewisakura.moe") 
-    local rawJoinLink = "https://7luk3e7.github.io/roblox/?placeId=" .. game.PlaceId .. "&jobId=" .. tostring(game.JobId) 
-    local payload = { 
-        ["embeds"] = { { 
-            ["title"] = embedData.title or "Server Notification", 
-            ["type"] = "rich", 
-            ["description"] = "[**Click To Join Server**](" .. rawJoinLink .. ")", 
-            ["color"] = embedData.color or 5763719, 
-            ["fields"] = { { 
-                ["name"] = embedData.fieldName or "Pets Found", 
-                ["value"] = embedData.fieldValue or "No details available", 
-                ["inline"] = false 
-            } } 
-        } } 
-    } 
-    pcall(function() 
-        requestFunction({ 
-            Url = cleanedUrl, 
-            Method = "POST", 
-            Headers = {["content-type"] = "application/json"}, 
-            Body = Http:JSONEncode(payload) 
-        }) 
-    end) 
-end 
-
-local function triggerNormalAlertSpam(embedStructure) 
-    alertEmbedData = embedStructure 
-    if normalAlertLoopActive then return end 
-    normalAlertLoopActive = true 
-    task.spawn(function() 
-        while normalAlertLoopActive do 
-            postToWebhook(normal_webhook_url, alertEmbedData) 
-            task.wait(2) 
-        end 
-    end) 
-end 
-
-local function triggerSpecialAlertSpam(embedStructure) 
-    specialEmbedData = embedStructure 
-    normalAlertLoopActive = false 
-    if specialAlertLoopActive then return end 
-    specialAlertLoopActive = true 
-    task.spawn(function() 
-        while specialAlertLoopActive do 
-            postToWebhook(special_webhook_url, specialEmbedData) 
-            task.wait(2) 
-        end 
-    end) 
-end 
-
-local function isUnwanted(petName) 
-    local name = tostring(petName):lower() 
-    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or string.find(name, "turtle") or string.find(name, "frog") then 
-        return true 
-    end 
-    return false 
-end 
-
--- Optimized Server Hopping Engine
-local hoppingStarted = false 
-local function startHopping() 
-    if hoppingStarted then return end 
-    hoppingStarted = true 
-    normalAlertLoopActive = false 
-    specialAlertLoopActive = false 
-    
-    saveHistory(game.JobId)
-
-    local _place = game.PlaceId 
-    local _servers = Api.._place.."/servers/Public?sortOrder=Asc&limit=100" 
-    
-    local function ListServers(cursor) 
-        local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end) 
-        if success and Raw then return Http:JSONDecode(Raw) end 
-        return nil 
-    end 
-
-    print("🚀 Filtering servers for script overlap & history...") 
-    while true do 
-        local chosenServer = nil 
-        pcall(function() 
-            local Servers = ListServers() 
-            if Servers and Servers.data and #Servers.data > 0 then 
-                local targetPool = {}
-                for _, server in pairs(Servers.data) do
-                    local skipThisServer = false
-                    
-                    -- Filter out last 5 servers visited
-                    for _, oldId in pairs(serverHistory) do
-                        if server.id == oldId then
-                            skipThisServer = true
-                            break
-                        end
-                    end
-                    
-                    -- Filter out servers with active matching script loops or full queues
-                    if occupiedServers[server.id] or server.playing >= server.maxPlayers then
-                        skipThisServer = true
-                    end
-                    
-                    if not skipThisServer then
-                        table.insert(targetPool, server)
-                    end
-                end
-                
-                -- Fallback to random if all listed servers fail strict filtering constraints
-                if #targetPool > 0 then
-                    chosenServer = targetPool[math.random(1, #targetPool)]
-                else
-                    chosenServer = Servers.data[math.random(1, #Servers.data)]
-                end
-            end 
-        end) 
-
-        if chosenServer then 
-            pcall(function() 
-                TPS:TeleportToPlaceInstance(_place, chosenServer.id, game.Players.LocalPlayer) 
-            end) 
-        end 
-        task.wait(2) 
-    end 
-end 
-
-local function getWantedPetCount(folder) 
-    if not folder then return 0 end 
-    local count = 0 
-    for _, item in pairs(folder:GetChildren()) do 
-        local name = item.Name 
-        if isSpecial(name) or not isUnwanted(name) then 
-            count = count + 1 
-        end 
-    end 
-    return count 
-end 
-
--- ==========================================
--- MAIN EXECUTION PIPELINE
--- ==========================================
-local map = workspace:WaitForChild("Map", 10) 
-local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10) 
-task.wait(LOAD_DELAY) 
-
-if spawnsFolder then 
-    local initialItems = spawnsFolder:GetChildren() 
-    local wantedPetsFound = {} 
-    local specialPetsFound = {} 
-    for _, item in pairs(initialItems) do 
-        local name = tostring(item.Name) 
-        if isSpecial(name) then 
-            table.insert(specialPetsFound, cleanName(name)) 
-        elseif not isUnwanted(name) then 
-            table.insert(wantedPetsFound, cleanName(name)) 
-        end 
-    end 
-
-    if #specialPetsFound > 0 then 
-        local specialList = "" 
-        for _, name in pairs(specialPetsFound) do 
+    end)
+else
+    warn("Path workspace.Map.WildPetSpawns could not be found.")
+    startHopping()
+end
