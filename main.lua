@@ -5,10 +5,7 @@ local LOAD_DELAY = 3 -- Time (in seconds) allowed for game files and pets to loa
 
 -- Pets added here will only be sent to the SECONDARY webhook and will NOT trigger the main webhook
 local SECONDARY_LIST = {
-    "raccoon",
-    "unicorn",
-    "goldendragonfly",
-    "firefly"
+    "raccoon", "unicorn", "goldendragonfly", "firefly"
     -- Add more pets here using lowercase text, separated by commas (e.g., "fox", "cat")
 }
 
@@ -72,12 +69,23 @@ local function sendToDiscord(embedData, urlToUse)
     end)
 end
 
--- Helper check function to find unwanted pets
+-- Helper check function to find unwanted pets (Modified with priority bypass)
 local function isUnwanted(petName)
     local name = tostring(petName):lower()
-    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or string.find(name, "turtle") or string.find(name, "frog") then
+    
+    -- Priority Bypass: If the name contains big, mega, or rainbow, it is always wanted
+    if string.find(name, "big") or string.find(name, "mega") or string.find(name, "rainbow") then
+        return false
+    end
+    
+    -- Standard filter list
+    if string.find(name, "bunny") or string.find(name, "owl") or string.find(name, "bear") or 
+       string.find(name, "robin") or string.find(name, "baldeagle") or string.find(name, "monkey") or 
+       string.find(name, "bee") or string.find(name, "fih") or string.find(name, "deer") or 
+       string.find(name, "turtle") or string.find(name, "frog") then
         return true
     end
+    
     return false
 end
 
@@ -103,9 +111,7 @@ local function startHopping()
     
     local function ListServers(cursor)
         local success, Raw = pcall(function() return game:HttpGet(_servers .. ((cursor and "&cursor="..cursor) or "")) end)
-        if success and Raw then
-            return Http:JSONDecode(Raw)
-        end
+        if success and Raw then return Http:JSONDecode(Raw) end
         return nil
     end
     
@@ -177,6 +183,7 @@ end
 -- Main Check & Notification Sequence
 local map = workspace:WaitForChild("Map", 10)
 local spawnsFolder = map and map:WaitForChild("WildPetSpawns", 10)
+
 task.wait(LOAD_DELAY)
 
 if spawnsFolder then
